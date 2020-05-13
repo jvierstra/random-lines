@@ -15,7 +15,7 @@ int main(int argc, const char* argv[]) {
 
 	misc::options::parser opts("random-lines-pairs", "output paired random lines", "");
 	opts.add_store_option('n', "num", "number of lines to return", n, "1", true);	
-	opts.add_store_option('N', "max", "total lines in the file", N, "4294967295", true);
+	opts.add_store_option('N', "max", "Total lines in the file", N, "4294967295", true);
 	opts.add_store_option('s', "seed", "seed for random number generator", s); 
 	opts.parse(argv, argv + argc);
 
@@ -24,9 +24,13 @@ int main(int argc, const char* argv[]) {
 		return 1;
 	}
 
+	if(N%2>0) {
+		std::cerr << "ERROR: THe number of total lines must be EVEN" << std::endl;
+		return 1;
+	}
 
 	math::random rng(s);
-	math::sequential_sampler samp(n, N, rng);
+	math::sequential_sampler samp(n, N/2, rng);
 
 	size_t seekline, currline = 0;		
 	std::string line1, line2;
