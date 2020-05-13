@@ -13,16 +13,14 @@ int main(int argc, const char* argv[]) {
 
 	std::cin.exceptions( std::ios::badbit | std::ios::eofbit | std::ios::failbit );
 
-	misc::options::parser opts("random", "output random numbers", "");
+	misc::options::parser opts("random-lines", "output random lines", "");
 	opts.add_store_option('n', "num", "number of lines to return", n, "1", true);	
 	opts.add_store_option('N', "max", "total lines in the file", N, "4294967295", true);
 	opts.add_store_option('s', "seed", "seed for random number generator", s); 
 	opts.parse(argv, argv + argc);
 
 	if (n >= N) {
-
 		std::cerr << "ERROR: The number of lines to return must be less than the total lines in the file!" << std::endl;
-		
 		return 1;
 	}
 	
